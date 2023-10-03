@@ -5,7 +5,7 @@ import { LOGIN_URL } from "./utiils/urls";
 import axios from "axios";
 import B2BContext from "./Context/b2bContext";
 import { useCookies } from "next-client-cookies";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 
 const Page = () => {
@@ -16,7 +16,8 @@ const Page = () => {
   const history = useRouter();
 
   useEffect(() => {
-    if (cookies.get("token")) {
+    let pathname = usePathname();
+    if (cookies.get("token") && pathname == "/") {
       history.push("/b2b");
     }
   }, [cookies, history]);

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import NextModal from "./Modal";
+// import NextModal from "./Modal";
 
 const UserBar = () => {
   const [modalOpen, setModalOpen] = useState(false);
