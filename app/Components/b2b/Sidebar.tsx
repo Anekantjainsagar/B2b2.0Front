@@ -36,7 +36,7 @@ const Sidebar = () => {
       let route = routes.filter((e) => e?.name != "Agents");
       setRoutes([...route]);
     }
-  }, [login, routes]);
+  }, [login]);
 
   return (
     <div className="w-[15vw] h-full flex flex-col items-center py-[1vw]">

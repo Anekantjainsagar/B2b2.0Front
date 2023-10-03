@@ -14,13 +14,14 @@ const Page = () => {
   const { setLogin }: any = useContext(B2BContext);
   const cookies = useCookies();
   const history = useRouter();
+  let pathname = usePathname();
 
   useEffect(() => {
-    let pathname = usePathname();
     if (cookies.get("token") && pathname == "/") {
+      console.log("first")
       history.push("/b2b");
     }
-  }, [cookies, history]);
+  }, []);
 
   const onLogin = (e: any) => {
     axios

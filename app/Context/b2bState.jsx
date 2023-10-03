@@ -8,9 +8,9 @@ import { useCookies } from "next-client-cookies";
 const B2BState = (props) => {
   const [login, setLogin] = useState();
   const cookies = useCookies();
+  let token = cookies.get("token");
 
   useEffect(() => {
-    let token = cookies.get("token");
     axios
       .post(`${LOGIN_URL}/login/check`, { token })
       .then((res) => {
@@ -19,7 +19,7 @@ const B2BState = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [cookies]);
+  }, []);
 
   return (
     <B2BContext.Provider value={{ login, setLogin }}>
