@@ -19,7 +19,7 @@ const B2BState = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [cookies]);
 
   return (
     <B2BContext.Provider value={{ login, setLogin }}>

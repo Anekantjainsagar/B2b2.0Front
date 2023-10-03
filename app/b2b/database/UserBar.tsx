@@ -13,7 +13,7 @@ const UserBar = () => {
         setModalOpen(!modalOpen);
       }}
     >
-      <NextModal setModalOpen={setModalOpen} modalOpen={modalOpen} />
+      {/* <NextModal setModalOpen={setModalOpen} modalOpen={modalOpen} /> */}
       <div
         className="grid items-center break-words"
         style={{ gridTemplateColumns: "4% 5% 18% 10% 10% 22% 10% 10% 10%" }}

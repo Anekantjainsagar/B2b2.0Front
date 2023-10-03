@@ -19,7 +19,7 @@ const Page = () => {
     if (cookies.get("token")) {
       history.push("/b2b");
     }
-  }, []);
+  }, [cookies, history]);
 
   const onLogin = (e: any) => {
     axios
