@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import B2BContext from "@/app/Context/b2bContext";
+import React, { useContext, useState } from "react";
 
 const Header = () => {
+  const { offers }: any = useContext(B2BContext);
 
   return (
     <>
@@ -11,6 +13,13 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search Offer by Name"
+            value={offers?.offerConfig?.name}
+            onChange={(e) => {
+              offers.setOfferConfig({
+                ...offers?.offerConfig,
+                name: e.target.value,
+              });
+            }}
             autoFocus
             className="outline-none w-[50%] bg-inputGray px-3 py-1 rounded-xl text-center tracking-wider"
           />

@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { LOGIN_URL } from "./utiils/urls";
+import { BASE_URL } from "./utiils/urls";
 import axios from "axios";
 import B2BContext from "./Context/b2bContext";
 import { useCookies } from "next-client-cookies";
@@ -18,14 +18,14 @@ const Page = () => {
 
   useEffect(() => {
     if (cookies.get("token") && pathname == "/") {
-      console.log("first")
+      console.log("first");
       history.push("/b2b");
     }
   }, []);
 
   const onLogin = (e: any) => {
     axios
-      .post(`${LOGIN_URL}/login`, { ...user })
+      .post(`${BASE_URL}/login`, { ...user })
       .then((res) => {
         console.log(res);
         if (res.status == 200) {

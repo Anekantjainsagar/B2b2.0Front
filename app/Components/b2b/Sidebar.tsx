@@ -48,22 +48,52 @@ const Sidebar = () => {
       >
         {login?.name != "Vidushi" ? login?.name + "'s" : "Master"} Panel
       </h1>
-      {routes.map((e, i) => {
-        return (
-          <p
-            className={`mb-3 ${
-              pathname == e?.routeName ? "bg-inputGray" : ""
-            } w-[55%] text-center py-1 rounded-2xl cursor-pointer`}
-            key={i}
-            onClick={(event) => {
-              event.preventDefault();
-              router.push(e?.routeName);
-            }}
-          >
-            {e?.name}
-          </p>
-        );
-      })}
+      <p
+        className={`mb-3 ${
+          pathname == "/b2b" ? "bg-inputGray" : ""
+        } w-[55%] text-center py-1 rounded-2xl cursor-pointer`}
+        onClick={(event) => {
+          event.preventDefault();
+          router.push("/b2b");
+        }}
+      >
+        Dashboard
+      </p>
+      <p
+        className={`mb-3 ${
+          pathname == "/b2b/database" ? "bg-inputGray" : ""
+        } w-[55%] text-center py-1 rounded-2xl cursor-pointer`}
+        onClick={(event) => {
+          event.preventDefault();
+          router.push("/b2b/database");
+        }}
+      >
+        Database
+      </p>
+      {login?.name === "Vidushi" ? (
+        <p
+          className={`mb-3 ${
+            pathname == "/b2b/agents" ? "bg-inputGray" : ""
+          } w-[55%] text-center py-1 rounded-2xl cursor-pointer`}
+          onClick={(event) => {
+            event.preventDefault();
+            router.push("/b2b/agents");
+          }}
+        >
+          Agents
+        </p>
+      ) : null}
+      <p
+        className={`mb-3 ${
+          pathname == "/b2b/offers" ? "bg-inputGray" : ""
+        } w-[55%] text-center py-1 rounded-2xl cursor-pointer`}
+        onClick={(event) => {
+          event.preventDefault();
+          router.push("/b2b/offers");
+        }}
+      >
+        Offers
+      </p>
       <p
         onClick={(e) => {
           cookies.remove("token");

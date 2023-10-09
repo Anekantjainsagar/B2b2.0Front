@@ -1,11 +1,52 @@
 "use client";
-import React, { useState } from "react";
+import B2BContext from "@/app/Context/b2bContext";
+import { BASE_URL } from "@/app/utiils/urls";
+// import { Axios } from "axios";
+import Axios from "axios";
+import React, { useState, useContext, useEffect } from "react";
+import { CSVLink } from "react-csv";
+import fileDownload from "js-file-download";
+import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
 
 const Header = () => {
+  const [data, setData] = useState([]);
   const [takeInput, setTakeInput] = useState(false);
+  const { dbs }: any = useContext(B2BContext);
+
+  useEffect(() => {
+    let db = dbs.databaseSelections.filter((school: any) => {
+      school["Principal Name"] = school.principal?.name;
+      school["Principal Email"] = school.principal?.email;
+      school["Principal Phone"] = school.principal?.phone;
+      school["Principal Role"] = school.principal?.role;
+      school["Coordinator Name"] = school.coordinator?.name;
+      school["Coordinator Email"] = school.coordinator?.email;
+      school["Coordinator Phone"] = school.coordinator?.phone;
+      school["Coordinator Role"] = school.coordinator?.role;
+      school["Trustee Name"] = school.trustee?.name;
+      school["Trustee Email"] = school.trustee?.email;
+      school["Trustee Phone"] = school.trustee?.phone;
+      school["Trustee Role"] = school.trustee?.role;
+      school["Handler Name"] = school?.handlerName;
+      school["No of students"] = school?.noOfStudents;
+      school["School fees"] = school?.schoolFee;
+      delete school?.noOfStudents;
+      delete school?.schoolFee;
+      delete school.handlerName;
+      delete school.logo;
+      delete school?._id;
+      delete school?.principal;
+      delete school?.trustee;
+      delete school?.coordinator;
+      return school;
+    });
+    setData(db);
+  }, [dbs.databaseSelections]);
 
   return (
     <>
+      <Toaster />
       <div
         className={`absolute top-[50%] -translate-y-[50%] left-[50%] -translate-x-[50%] w-[50%] ${
           takeInput ? "block" : "hidden"
@@ -38,7 +79,29 @@ const Header = () => {
                   SVG, PNG, JPG or GIF (MAX. 800x400px)
                 </p>
               </div>
-              <input id="dropzone-file" type="file" className="hidden" />
+              <input
+                id="dropzone-file"
+                type="file"
+                name="file"
+                onChange={(e) => {
+                  if (e?.target?.files) {
+                    let file = e?.target?.files[0];
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    axios
+                      .post(`${BASE_URL}/db/upload`, formData)
+                      .then((res) => {
+                        dbs.getSchools();
+                        setTakeInput(false);
+                        toast.success("Users added successfully");
+                      })
+                      .catch((err) => {
+                        toast.error(err.message);
+                      });
+                  }
+                }}
+                className="hidden"
+              />
             </label>
           </div>
         </div>
@@ -47,12 +110,30 @@ const Header = () => {
         <h1 className="font-bold text-2xl">Schools Database</h1>
         <div className="flex items-center justify-between w-[50%]">
           <input
+            value={dbs.dbConfig.name}
+            onChange={(e) => {
+              dbs.setDbConfig({ ...dbs.dbConfig, name: e.target.value });
+            }}
             type="text"
             placeholder="Search School by Name"
             autoFocus
             className="outline-none w-[40%] bg-inputGray px-3 py-1 rounded-xl text-center tracking-wider"
           />
-          <button className="greenButton">Import format</button>
+          <button
+            className="greenButton"
+            onClick={(e) => {
+              Axios({
+                url: `${BASE_URL}/db//download-format`,
+                method: "GET",
+                responseType: "blob",
+              }).then((res) => {
+                fileDownload(res.data, "school_format.csv");
+                toast.success("Input format downloaded successfully");
+              });
+            }}
+          >
+            Import format
+          </button>
           <button
             className="greenButton"
             onClick={(e) => {
@@ -62,7 +143,16 @@ const Header = () => {
           >
             Import
           </button>
-          <button className="greenButton">Export</button>
+          <CSVLink
+            data={data}
+            className="greenButton"
+            onClick={(e) => {
+              toast.success("Selected schools exported successfully");
+            }}
+            filename="Database.csv"
+          >
+            Export
+          </CSVLink>
         </div>
       </div>
     </>
