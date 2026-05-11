@@ -5,7 +5,7 @@ import TitleBar from "./TitleBar";
 import UserBar from "./UserBar";
 import B2BContext from "@/app/Context/b2bContext";
 
-const page = () => {
+const Agents = () => {
   const { agents }: any = useContext(B2BContext);
   return (
     <div className="px-4">
@@ -20,4 +20,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Agents;

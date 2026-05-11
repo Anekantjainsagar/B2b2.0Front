@@ -5,7 +5,7 @@ import TitleBar from "./TitleBar";
 import UserBar from "./UserBar";
 import B2BContext from "@/app/Context/b2bContext";
 
-const page = () => {
+const Database = () => {
   const [dbConfig, setDbConfig] = useState({
     mobile: "",
   });
@@ -33,4 +33,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Database;

@@ -1,11 +1,15 @@
 "use client";
 import B2BContext from "@/app/Context/b2bContext";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import AddAgent from "./AddAgent";
 
 const Header = () => {
   const { agents }: any = useContext(B2BContext);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
   return (
     <>
+      <AddAgent modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
       <div className="mt-[1vw]">
         <h1 className="font-bold text-2xl float-left">Agents</h1>
         <div className="float-right">
@@ -22,7 +26,9 @@ const Header = () => {
             autoFocus
             className="outline-none mr-3 bg-inputGray px-3 py-1 rounded-xl text-center tracking-wider"
           />
-          <button className="greenButton">Add New</button>
+          <button className="greenButton" onClick={(e) => {
+            setIsOpen(!modalIsOpen)
+          }}>Add New</button>
         </div>
       </div>
       <div className="clear-both"></div>

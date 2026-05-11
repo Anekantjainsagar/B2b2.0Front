@@ -5,7 +5,7 @@ import TitleBar from "./TitleBar";
 import UserBar from "./UserBar";
 import B2BContext from "@/app/Context/b2bContext";
 
-const page = () => {
+const Offers = () => {
   const { offers }: any = useContext(B2BContext);
 
   return (
@@ -21,4 +21,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Offers;

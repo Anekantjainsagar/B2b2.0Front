@@ -11,8 +11,8 @@ import toast, { Toaster } from "react-hot-toast";
 const Page = () => {
   const [user, setUser] = useState({ email: "", password: "" });
   const [visible, setVisible] = useState(false);
-  const { setLogin }: any = useContext(B2BContext);
-  const cookies = useCookies();
+  const { setLogin } = useContext(B2BContext);
+  const cookies = useCookies();clear
   const history = useRouter();
   let pathname = usePathname();
 
@@ -23,7 +23,7 @@ const Page = () => {
     }
   }, []);
 
-  const onLogin = (e: any) => {
+  const onLogin = (e) => {
     axios
       .post(`${BASE_URL}/login`, { ...user })
       .then((res) => {

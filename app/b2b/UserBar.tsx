@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import B2BContext from "../Context/b2bContext";
+import Slider from "../Components/b2bHome/Slider";
 
 const UserBar = ({ data }: any) => {
-  
+  const { users }: any = useContext(B2BContext);
+  const [visible, setVisible] = useState(false);
+
   return (
-    <div className="mb-3 bg-[#141414] py-2 rounded-xl">
+    <div
+      className="mb-3 bg-[#141414] py-2 rounded-xl cursor-pointer"
+      onClick={(e) => {
+        setVisible(!visible);
+        users?.setClickedUser(data);
+      }}
+    >
+      <div className={`${visible ? "block" : "hidden"}`}>
+        <Slider visible={visible} setVisible={setVisible} />
+      </div>
       <div
         className="grid items-center"
         style={{ gridTemplateColumns: "4% 12% 16% 10% 15% 10% 10% 10% 12%" }}

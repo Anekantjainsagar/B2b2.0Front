@@ -26,6 +26,25 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.animate {
+  right: 0%;
+  animation-name: cssAnimation;
+  background-color: black;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+  animation-duration: 0.4s;
+}
+
+@keyframes cssAnimation {
+  from {
+    right: -5%;
+  }
+
+  to {
+    right: 0%;
+  }
+}
+
 .greenButton{
   @apply bg-lightGreen w-fit mx-auto px-5 py-1 rounded-xl;
 }

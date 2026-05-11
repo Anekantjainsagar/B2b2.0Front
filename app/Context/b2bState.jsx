@@ -10,6 +10,7 @@ const B2BState = (props) => {
   const cookies = useCookies();
   let token = cookies.get("token");
   const [userData, setUserData] = useState();
+  const [clickedUser, setClickedUser] = useState();
   const [allUserData, setAllUserData] = useState([]);
   const [userConfig, setUserConfig] = useState({
     page: 1,
@@ -22,6 +23,7 @@ const B2BState = (props) => {
     offer: "",
   });
   const [databaseData, setDatabaseData] = useState();
+  const [clickedDb, setClickedDb] = useState();
   const [databaseSelections, setDatabaseSelections] = useState([]);
   const [dbConfig, setDbConfig] = useState({
     name: "",
@@ -34,6 +36,7 @@ const B2BState = (props) => {
   const [offerConfig, setOfferConfig] = useState({
     name: "",
   });
+  const [followUps, setFollowUps] = useState();
 
   const getUsers = () => {
     axios
@@ -109,6 +112,17 @@ const B2BState = (props) => {
       });
   };
 
+  const getFollowUps = () => {
+    axios
+      .get(`${BASE_URL}/user/getFollowUP?handler=${login?.name}`)
+      .then((res) => {
+        setFollowUps(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     axios
       .post(`${BASE_URL}/login/check`, { token })
@@ -118,7 +132,7 @@ const B2BState = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     getSchools();
@@ -147,6 +161,8 @@ const B2BState = (props) => {
     userData,
     allUserData,
     getAllUsers,
+    clickedUser,
+    setClickedUser,
   };
   let dbs = {
     getSchools,
@@ -155,13 +171,16 @@ const B2BState = (props) => {
     databaseData,
     databaseSelections,
     setDatabaseSelections,
+    clickedDb,
+    setClickedDb,
   };
   let agents = { getAgents, agentConfig, setAgentConfig, agentData };
   let offers = { getOffers, offerConfig, setOfferConfig, offerData };
+  let followups = { getFollowUps, followUps };
 
   return (
     <B2BContext.Provider
-      value={{ login, setLogin, users, dbs, agents, offers }}
+      value={{ login, setLogin, users, dbs, agents, offers, followups }}
     >
       {props.children}
     </B2BContext.Provider>

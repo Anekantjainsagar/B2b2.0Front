@@ -1,6 +1,7 @@
 "use client";
 import B2BContext from "@/app/Context/b2bContext";
 import React, { useState, useContext } from "react";
+import ViewDatabase from "./viewDatabase";
 // import NextModal from "./Modal";
 
 const UserBar = ({ data }: any) => {
@@ -11,11 +12,12 @@ const UserBar = ({ data }: any) => {
     <div
       className="mb-3 bg-[#141414] py-2 rounded-xl cursor-pointer"
       onClick={(e) => {
+        dbs.setClickedDb(data);
         e.preventDefault();
         setModalOpen(!modalOpen);
       }}
     >
-      {/* <NextModal setModalOpen={setModalOpen} modalOpen={modalOpen} /> */}
+      <ViewDatabase modalIsOpen={modalOpen} setIsOpen={setModalOpen} />
       <div
         className="grid items-center break-words"
         style={{ gridTemplateColumns: "4% 5% 18% 10% 10% 22% 10% 10% 10%" }}

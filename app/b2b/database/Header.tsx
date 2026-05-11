@@ -8,11 +8,13 @@ import { CSVLink } from "react-csv";
 import fileDownload from "js-file-download";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import AddDatabase from "./AddDatabase";
 
 const Header = () => {
   const [data, setData] = useState([]);
   const [takeInput, setTakeInput] = useState(false);
   const { dbs }: any = useContext(B2BContext);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     let db = dbs.databaseSelections.filter((school: any) => {
@@ -47,6 +49,7 @@ const Header = () => {
   return (
     <>
       <Toaster />
+      <AddDatabase modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
       <div
         className={`absolute top-[50%] -translate-y-[50%] left-[50%] -translate-x-[50%] w-[50%] ${
           takeInput ? "block" : "hidden"
@@ -90,12 +93,12 @@ const Header = () => {
                     formData.append("file", file);
                     axios
                       .post(`${BASE_URL}/db/upload`, formData)
-                      .then((res) => {
+                      .then((res: any) => {
                         dbs.getSchools();
                         setTakeInput(false);
                         toast.success("Users added successfully");
                       })
-                      .catch((err) => {
+                      .catch((err: any) => {
                         toast.error(err.message);
                       });
                   }
@@ -108,7 +111,7 @@ const Header = () => {
       </div>
       <div className="flex justify-between items-center mt-[1vw]">
         <h1 className="font-bold text-2xl">Schools Database</h1>
-        <div className="flex items-center justify-between w-[50%]">
+        <div className="flex items-center justify-between w-[70%]">
           <input
             value={dbs.dbConfig.name}
             onChange={(e) => {
@@ -126,7 +129,7 @@ const Header = () => {
                 url: `${BASE_URL}/db//download-format`,
                 method: "GET",
                 responseType: "blob",
-              }).then((res) => {
+              }).then((res: any) => {
                 fileDownload(res.data, "school_format.csv");
                 toast.success("Input format downloaded successfully");
               });
@@ -143,10 +146,19 @@ const Header = () => {
           >
             Import
           </button>
+          <button
+            className="greenButton"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsOpen(!modalIsOpen);
+            }}
+          >
+            Add New School
+          </button>
           <CSVLink
             data={data}
             className="greenButton"
-            onClick={(e) => {
+            onClick={(e: any) => {
               toast.success("Selected schools exported successfully");
             }}
             filename="Database.csv"

@@ -22,9 +22,12 @@
     "reactstrap": "^9.2.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/node": "latest",
     "@types/react": "latest",
+    "@types/react-csv": "^1.1.6",
     "@types/react-dom": "latest",
+    "@types/react-modal": "^3.16.1",
     "autoprefixer": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
